@@ -1,56 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Ope from './ope.js'
+import List from './list.js'
 import './App.css';
 
+const useStyles = makeStyles({})
 
-const List = (props) => {
-  const classes = useStyles();
-  const [row, setRow] = useState();
+export default function App() {
+  const [setting, setSetting] = useState({})
+  const [rows, setRow] = useState([]);
+  const inputRef = useRef();
 
-  const FileDrop = (e) => {
+  const testdata = [
+    { name: "test", size: 100, path: "testes" },
+    { name: "test2", size: 200, path: "testes2" },
+    { name: "test3", size: 300, path: "testes3" },
+    { name: "test4", size: 400, path: "testes4" },
+    { name: "test5", size: 500, path: "testes5" }
+  ];
 
-  }
+  const handleDelete = (e, name) => {
+    e.preventDefault();
+
+    const delIndex = rows.findIndex(rows => rows.name === name)
+    let newRows = rows.concat()
+    newRows.splice(delIndex, 1)
+    setRow(newRows)
+  };
+
+  useEffect(
+    () => {
+      setRow(testdata)
+    },
+    [inputRef]
+  );
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <Table className={classes.table} size="small" aria-label="a dense table" onDrop="">
-          <TableHead>
-            <TableRow>
-              <TableCell>FileName</TableCell>
-              <TableCell align="right">FileSize</TableCell>
-              <TableCell align="right">FilePath</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.size}</TableCell>
-                <TableCell align="right">{row.path}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+    <div className="App">
+      <Ope />
+      <List data={rows} deletehandler={handleDelete} />
     </div>
   );
 };
-
-function App() {
-  return (
-    <div className="App">
-      <List />
-    </div>
-  );
-}
-
-export default App;
