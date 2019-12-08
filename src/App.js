@@ -1,13 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Ope from './ope.js'
+import Size from './size.js'
+import Path from './path'
 import List from './list.js'
 import './App.css';
 
-const useStyles = makeStyles({})
+
+const useStyles = makeStyles({
+  App: {
+    textAlign: "left",
+  }
+})
 
 export default function App() {
-  const [setting, setSetting] = useState({})
+  const classes = useStyles();
+  const [mode, setMode] = useState('percentage');
+  const [values, setValue] = useState({
+    percent: "",
+    height: "",
+    width: "",
+    path: "",
+  });
   const [rows, setRow] = useState([]);
   const inputRef = useRef();
 
@@ -18,6 +31,17 @@ export default function App() {
     { name: "test4", size: 400, path: "testes4" },
     { name: "test5", size: 500, path: "testes5" }
   ];
+
+  const handleChange = (e) => {
+    setMode(e.target.value);
+    setValue("percent", "")
+    setValue("height", "")
+    setValue("width", "")    
+  };
+
+  const handleValue = (e, name) => {
+    setValue(name, e.target.value)
+  };
 
   const handleDelete = (e, name) => {
     e.preventDefault();
@@ -36,8 +60,9 @@ export default function App() {
   );
 
   return (
-    <div className="App">
-      <Ope />
+    <div className={classes.App}>
+      <Size changehandler={handleChange} valuehandler={handleValue} mode={mode} values={values}/>
+      <Path values={values}/>
       <List data={rows} deletehandler={handleDelete} />
     </div>
   );
