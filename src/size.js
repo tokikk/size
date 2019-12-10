@@ -34,6 +34,9 @@ const useStyles = makeStyles({
         display: "flex",
         margin: 2,
     },
+    inputField: {
+        width: 80,
+    }
 })
 
 export default function Size(props) {
@@ -48,53 +51,60 @@ export default function Size(props) {
                             <div className={classes.inputLine}>
                                 <div className={classes.percent}>
                                     <FormControlLabel value="percentage" control={<Radio />} label="割合で指定する(1-100)" />
-
-                                    <TextField
-                                        disabled={props.mode !== "percentage"}
-                                        label="Percentage"
-                                        type="number"
-                                        value={props.values.percent}
-                                        InputProps={{
-                                            endAdornment: <InputAdornment position="end">%</InputAdornment>,
-                                            shrink: "true",
-                                        }}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        onChange={e => props.valuehandler(e, "percentage")}
-                                    />
+                                    <Box px={4}>
+                                        <TextField
+                                            className={classes.inputField}
+                                            disabled={props.mode !== "percentage"}
+                                            label="Percentage"
+                                            type="number"
+                                            size="small"
+                                            value={props.values.percent}
+                                            InputProps={{
+                                                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                                                shrink: "true",
+                                            }}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            onChange={e => props.valuehandler(e, "percentage")}
+                                        />
+                                    </Box>
                                 </div>
                                 <div>
                                     <FormControlLabel value="absolute" control={<Radio />} label="絶対値で指定する" />
-                                    <div className={classes.inputLine}>
-                                        <TextField
-                                            disabled={props.mode !== "absolute"}
-                                            label="Height"
-                                            value={props.values.height}
-                                            type="number"
-                                            InputProps={{
-                                                endAdornment: <InputAdornment position="end">px</InputAdornment>,
-                                            }}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            onChange={e => props.valuehandler(e, "height")}
-                                        />
-                                        <Typography variant="body1">　</Typography>
-                                        <TextField
-                                            disabled={props.mode !== "absolute"}
-                                            label="Width"
-                                            value={props.values.width}
-                                            type="number"
-                                            InputProps={{
-                                                endAdornment: <InputAdornment position="end">px</InputAdornment>,
-                                            }}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            onChange={e => props.valuehandler(e, "width")}
-                                        />
-                                    </div>
+                                        <Box px={4} className={classes.inputLine}>
+                                            <TextField
+                                                className={classes.inputField}
+                                                disabled={props.mode !== "absolute"}
+                                                label="Height"
+                                                value={props.values.height}
+                                                type="number"
+                                                size="small"
+                                                InputProps={{
+                                                    endAdornment: <InputAdornment position="end">px</InputAdornment>,
+                                                }}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                onChange={e => props.valuehandler(e, "height")}
+                                            />
+                                            <Typography variant="body1">　</Typography>
+                                            <TextField
+                                                className={classes.inputField}
+                                                disabled={props.mode !== "absolute"}
+                                                label="Width"
+                                                value={props.values.width}
+                                                type="number"
+                                                size="small"
+                                                InputProps={{
+                                                    endAdornment: <InputAdornment position="end">px</InputAdornment>,
+                                                }}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                onChange={e => props.valuehandler(e, "width")}
+                                            />
+                                        </Box>
                                 </div>
                             </div>
                         </RadioGroup>
