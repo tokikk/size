@@ -11,15 +11,19 @@ import TextField from '@material-ui/core/TextField'
 import InputBase from '@material-ui/core/InputBase'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
+import { opendir } from 'fs';
 
 const useStyles = makeStyles({
     path: {
         width: 660,
         height: 80,
     },
+
+
 })
 
 export default function Path(props) {
@@ -27,28 +31,25 @@ export default function Path(props) {
 
     return (
         <Paper className={classes.path}>
-            <Box m={2} p={2}>
+            <Box p={1}>
                 <div className={classes.inputLine}>
                     <TextField
                         disabled
                         fullWidth
-                        label="Saved file path"
+                        label="Saved directory path"
                         value={props.values.path}
                         InputProps={{
                             endAdornment:
-                            <InputAdornment position="end">
-                                <IconButton aria-label="search">
-                                    <SearchIcon />
-                                </IconButton>
-                            </InputAdornment>,
+                                <InputAdornment position="end">
+                                    <IconButton aria-label="search" onClick={e => props.dialoghandler(e)}>
+                                        <SearchIcon />
+                                    </IconButton>
+                                </InputAdornment>,
                         }}
                         InputLabelProps={{
                             shrink: true,
                         }}
                     />
-                    <IconButton aria-label="search">
-
-                    </IconButton>
                 </div>
             </Box>
         </Paper>

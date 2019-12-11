@@ -4,11 +4,12 @@ import Size from './size.js'
 import Path from './path'
 import List from './list.js'
 import './App.css';
-
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles({
   App: {
     textAlign: "left",
+    fontSize: 2,
   }
 })
 
@@ -23,6 +24,7 @@ export default function App() {
   });
   const [rows, setRow] = useState([]);
   const inputRef = useRef();
+  const { ipcRenderer } = window
 
   const testdata = [
     { name: "test", size: 100, path: "testes" },
@@ -36,7 +38,7 @@ export default function App() {
     setMode(e.target.value);
     setValue("percent", "")
     setValue("height", "")
-    setValue("width", "")    
+    setValue("width", "")
   };
 
   const handleValue = (e, name) => {
@@ -52,6 +54,19 @@ export default function App() {
     setRow(newRows)
   };
 
+  const { dialog, remote } = window;
+
+  const openDialog = e => {
+    alert('renderer');
+    // dialog.showOpenDialog(remote.getCurrentWindow(), { properties: ['openDirectory'] }, files => {
+    //   setValue('path', files);
+    //   alert(files)
+    // });
+    alert(ipcRenderer)
+    let directory = ipcRenderer.sendSync('open-dialog', 'test');
+    alert(directory)
+  };
+
   useEffect(
     () => {
       setRow(testdata)
@@ -61,9 +76,15 @@ export default function App() {
 
   return (
     <div className={classes.App}>
-      <Size changehandler={handleChange} valuehandler={handleValue} mode={mode} values={values}/>
-      <Path values={values}/>
-      <List data={rows} deletehandler={handleDelete} />
+      <Box m={1}>
+        <Size changehandler={handleChange} valuehandler={handleValue} mode={mode} values={values} />
+      </Box>
+      <Box m={1}>
+        <Path values={values} dialoghandler={openDialog} />
+      </Box>
+      <Box m={1}>
+        <List data={rows} deletehandler={handleDelete} />
+      </Box>
     </div>
   );
 };
