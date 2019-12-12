@@ -57,14 +57,8 @@ export default function App() {
   const { dialog, remote } = window;
 
   const openDialog = e => {
-    alert('renderer');
-    // dialog.showOpenDialog(remote.getCurrentWindow(), { properties: ['openDirectory'] }, files => {
-    //   setValue('path', files);
-    //   alert(files)
-    // });
-    alert(ipcRenderer)
-    let directory = ipcRenderer.sendSync('open-dialog', 'test');
-    alert(directory)
+    const directory = dialog.showOpenDialogSync(remote.getCurrentWindow(), { properties: ['openDirectory'], });
+    setValue({ 'path': directory });
   };
 
   useEffect(
